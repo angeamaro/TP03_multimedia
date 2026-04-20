@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crise dos 20 — Uma Jornada Interior</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ================================================
+       INTRO / SELEÇÃO DE VERSÃO
+       ================================================ -->
+  <div id="screen-intro" class="screen active">
+    <div class="intro-glow"></div>
+    <div class="intro-content">
+      <p class="intro-eyebrow">Trabalho Prático 03 · Multimídia</p>
+      <h1 class="intro-title">CRISE<br>DOS 20</h1>
+      <p class="intro-tagline">Uma Jornada Interior</p>
+      <p class="intro-desc">
+        Uma história real sobre a pressão, a ansiedade e a busca de identidade
+        que silenciosamente afeta milhões de jovens em todo o mundo.
+      </p>
+      <p class="intro-choose">Escolhe como queres experienciar a história:</p>
+      <div class="version-grid">
+
+        <div class="v-card" id="card-v1">
+          <div class="v-roman">I</div>
+          <h2 class="v-name">Narrativa Visual</h2>
+          <p class="v-sub">Imagens e vídeos<br>Sem áudio · Sem legendas</p>
+          <button class="btn-enter" data-version="1">Começar</button>
+        </div>
+
+        <div class="v-divider"></div>
+
+        <div class="v-card" id="card-v2">
+          <div class="v-roman">II</div>
+          <h2 class="v-name">Narrativa Interativa</h2>
+          <p class="v-sub">Com controlo de legendas<br>e áudio narrado</p>
+          <button class="btn-enter" data-version="2">Começar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================
+       PLAYER
+       ================================================ -->
+  <div id="screen-player" class="screen">
+
+    <!-- Barra superior -->
+    <div id="topbar">
+      <button id="btn-home">&#8592; Início</button>
+      <div id="version-pill">
+        <span id="v-label">VERSÃO 1</span>
+        <span id="v-name-label">Narrativa Visual</span>
+      </div>
+      <div id="scene-counter">Cena <span id="scene-n">1</span>&thinsp;/&thinsp;3</div>
+    </div>
+
+    <!-- Cabeçalho da cena -->
+    <div id="scene-head">
+      <span id="scene-eyebrow">CENA 1</span>
+      <h2 id="scene-title">O Peso das Expectativas</h2>
+      <p id="scene-theme">A pressão de ter respostas antes de ter perguntas</p>
+    </div>
+
+    <!-- Área de media -->
+    <div id="media-area">
+
+      <!-- Painel de vídeo -->
+      <div id="panel-video" class="media-panel">
+        <div id="video-frame">
+          <video id="main-video" preload="metadata" playsinline></video>
+          <div id="sub-overlay"></div>
+          <div id="big-play"><span>&#9654;</span></div>
+        </div>
+        <div id="vctrls">
+          <div id="progress-wrap">
+            <div id="progress-bg"><div id="progress-fg"></div></div>
+          </div>
+          <div id="vctrls-row">
+            <div class="vc-left">
+              <button class="vbtn" id="btn-pp">
+                <span id="icon-play">&#9654;</span>
+                <span id="icon-pause" style="display:none">&#9646;&#9646;</span>
+              </button>
+              <button class="vbtn" id="btn-mute" title="Volume">&#128266;</button>
+              <input type="range" id="vol-range" min="0" max="1" step="0.02" value="0.3" title="Volume">
+              <span id="vol-pct">30%</span>
+              <span id="time-txt">0:00 / 0:00</span>
+            </div>
+            <div class="vc-right">
+              <button class="vbtn" id="btn-fs" title="Ecrã inteiro">&#x26F6;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Painel de galeria de imagens -->
+      <div id="panel-gallery" class="media-panel" style="display:none">
+        <div id="gallery-frame">
+          <img id="gal-img" src="" alt="Imagem da narrativa">
+          <div id="gal-placeholder">
+            <div class="ph-icon">&#128444;</div>
+            <div class="ph-name" id="ph-name"></div>
+            <div class="ph-hint">Coloca a imagem em media/images/</div>
+          </div>
+          <div id="gal-caption"></div>
+          <button id="btn-gi-prev" class="gal-arrow">&#10094;</button>
+          <button id="btn-gi-next" class="gal-arrow gal-right">&#10095;</button>
+        </div>
+        <div id="gal-bar">
+          <div id="gal-dots"></div>
+          <span id="gal-counter">1 / 10</span>
+          <div id="gal-timer-bar"><div id="gal-timer-fill"></div></div>
+        </div>
+      </div>
+
+    </div><!-- #media-area -->
+
+    <!-- Barra de legendas (V2) -->
+    <div id="sub-bar">
+      <p id="sub-text">&#8203;</p>
+    </div>
+
+    <!-- Controlos interativos (V2) -->
+    <div id="interact-bar">
+      <button id="btn-subs" class="ibtn off">
+        &#128466; Adicionar Legendas
+      </button>
+      <button id="btn-aud" class="ibtn off">
+        &#127911; Ativar Áudio
+      </button>
+    </div>
+
+    <!-- Áudio de fundo (V1) -->
+    <audio id="aud-melody" loop>
+      <source src="media/audio/melody.mp3" type="audio/mpeg">
+    </audio>
+    <!-- Narração (V2) -->
+    <audio id="aud-narr">
+      <source id="narr-src" src="" type="audio/mpeg">
+    </audio>
+
+    <!-- Navegação entre cenas -->
+    <div id="scene-nav">
+      <button id="btn-prev-scene" disabled>&#8592; Cena Anterior</button>
+      <div id="scene-dots">
+        <button class="sdot active" data-idx="0" title="Cena 1: O Dia Que Não Começa"></button>
+        <button class="sdot" data-idx="1" title="Cena 2: O Convite"></button>
+        <button class="sdot" data-idx="2" title="Cena 3: Um Dia de Cada Vez"></button>
+      </div>
+      <button id="btn-next-scene">Próxima Cena &#8594;</button>
+    </div>
+
+  </div><!-- #screen-player -->
+
+  <script src="script.js"></script>
+</body>
+</html>
