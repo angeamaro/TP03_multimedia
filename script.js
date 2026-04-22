@@ -137,12 +137,13 @@ const v1State = {
 };
 
 const v2State = {
-  chapters:      [],           // cópia de CHAPTERS_V2
+  chapters:      [],
   activeChapter: 0,
   videoSrc:      'media/videos/crise_dos_20.mp4',
   videoBlobUrl:  null,
-  audioBlobUrl:  null,
-  subtitles:     [],           // array global; substituído por SRT carregado
+  audioSrc:      null,         // caminho padrão ou blob URL do áudio carregado
+  audioBlobUrl:  null,         // apenas para revogação do blob
+  subtitles:     [],
   subtitlesOn:   false,
   audioOn:       false,
   toastTimer:    null,
@@ -174,7 +175,11 @@ function goHome() {
   $('v1-music').pause();
   v1StopTimer();
   $('v2-video').pause();
-  $('v2-audio').pause();
+  const aud = $('v2-audio');
+  aud.pause();
+  aud.src = '';
+  if (v2State.audioBlobUrl) { URL.revokeObjectURL(v2State.audioBlobUrl); v2State.audioBlobUrl = null; }
+  v2State.audioSrc = null;
   if (document.fullscreenElement) document.exitFullscreen();
   showScreen('intro');
 }
@@ -475,11 +480,12 @@ function initV2() {
 function startV2() {
   v2State.chapters      = CHAPTERS_V2.map(c => ({ ...c }));
   v2State.activeChapter = 0;
-  v2State.subtitles     = DEFAULT_SUBS_V2.map(s => ({ ...s }));
+  v2State.subtitles     = [];
   v2State.subtitlesOn   = false;
   v2State.audioOn       = false;
   v2State.videoBlobUrl  = null;
   v2State.audioBlobUrl  = null;
+  v2State.audioSrc      = null;
 
   showScreen('v2');
 
@@ -492,6 +498,26 @@ function startV2() {
 
   v2SetPlayState(false);
   v2UpdateTime();
+
+  // Carrega legendas padrão do ficheiro SRT
+  fetch('media/captions/crise_dos_20.srt')
+    .then(r => { if (!r.ok) throw new Error(); return r.text(); })
+    .then(text => {
+      const subs = parseSRT(text);
+      if (subs.length) {
+        v2State.subtitles = subs;
+        v2UpdateActionBar();
+      }
+    })
+    .catch(() => {});
+
+  // Carrega áudio padrão
+  const defaultAudio = 'media/audio/crise_dos_20_audio.mp3';
+  const aud = $('v2-audio');
+  aud.src = defaultAudio;
+  aud.load();
+  v2State.audioSrc = defaultAudio;
+
   v2UpdateActionBar();
   v2RenderChapterList();
 }
@@ -711,7 +737,7 @@ function v2ToggleAud() {
 
 function v2UpdateActionBar() {
   const hasSubs = v2State.subtitles.length > 0;
-  const hasAud  = !!v2State.audioBlobUrl;
+  const hasAud  = !!v2State.audioSrc;
 
   // — Legendas —
   const addSubs    = $('v2-btn-add-subs');
@@ -778,9 +804,10 @@ function v2OnAudioUpload(e) {
   if (!file) return;
   if (v2State.audioBlobUrl) URL.revokeObjectURL(v2State.audioBlobUrl);
   v2State.audioBlobUrl = URL.createObjectURL(file);
+  v2State.audioSrc     = v2State.audioBlobUrl;
   const aud   = $('v2-audio');
   const video = $('v2-video');
-  aud.src = v2State.audioBlobUrl;
+  aud.src = v2State.audioSrc;
   aud.load();
   v2State.audioOn = true;
   if (!video.paused) {
