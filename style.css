@@ -222,7 +222,14 @@ button { font-family:inherit; cursor:pointer; }
 }
 .play-btn:hover { background:var(--primary-h) !important; border-color:var(--primary-h) !important; }
 
-#v1-slide-info  { font-size:.75rem; color:var(--text-dim); margin-left:.25rem; }
+.v1-sep { width:1px; height:20px; background:var(--border); margin:0 .15rem; flex-shrink:0; }
+
+.ctrl-btn.music-on  { border-color:var(--accent);   color:var(--accent); }
+.ctrl-btn.music-off { border-color:var(--text-mute); color:var(--text-mute); }
+.ctrl-btn.music-on:hover  { background:rgba(245,166,35,.12); }
+.ctrl-btn.music-off:hover { border-color:var(--accent); color:var(--accent); }
+
+#v1-slide-info   { font-size:.75rem; color:var(--text-dim); margin-left:.25rem; }
 #v1-music-status { font-size:.72rem; color:var(--text-mute); margin-left:auto; transition:color .2s; }
 #v1-music-status.playing { color:var(--accent); }
 

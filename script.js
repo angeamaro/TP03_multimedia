@@ -30,34 +30,96 @@ const IMAGES_V1 = [
 // Capítulos = marcas de tempo dentro de um único vídeo (como YouTube)
 // ============================================================
 
+// Capítulos com timestamps reais do vídeo crise_dos_20.mp4 (4:02 = 242s)
+// 0:26=26s | 1:44=104s | 2:09=129s | 2:56=176s | 3:23=203s
 const CHAPTERS_V2 = [
   {
-    title: 'O Dia Que Não Começa',
+    title: 'Vinte e Perdido',
     theme: 'Toda a gente diz que os 20 são os melhores anos da tua vida.',
     start: 0,
   },
   {
     title: 'O Convite',
-    theme: 'E eu? Onde estou eu?',
-    start: 65,
+    theme: 'Redes sociais, candidaturas, a rejeição silenciosa.',
+    start: 26,   // 0:26
   },
   {
-    title: 'Um Dia de Cada Vez',
-    theme: 'Um bom dia de cada vez.',
-    start: 110,
+    title: 'A Caminhada',
+    theme: 'Toda a gente parece estar dentro de uma vida que funciona.',
+    start: 104,  // 1:44
+  },
+  {
+    title: 'A Cobrança',
+    theme: 'E eu? Onde estou eu?',
+    start: 129,  // 2:09
+  },
+  {
+    title: 'O Casamento',
+    theme: 'Rodeado de gente. Completamente sozinho.',
+    start: 176,  // 2:56
+  },
+  {
+    title: 'O Fim',
+    theme: 'E vai ser outro dia igual. E está bem.',
+    start: 203,  // 3:23
   },
 ];
 
-// Legendas padrão para o vídeo (tempos em segundos, absolutos)
+// Legendas alinhadas com o vídeo crise_dos_20.mp4 (4:02)
+// Baseadas na análise frame a frame — substituíveis por ficheiro .srt
 const DEFAULT_SUBS_V2 = [
-  { start:   0, end:  14, text: 'Toda a gente diz que os 20 são os melhores anos da tua vida.' },
-  { start:  14, end:  27, text: 'Ninguém te conta como é quando não parece assim.' },
-  { start:  40, end:  51, text: '«Nova fase. A vida tá boa!» — 487 gostos' },
-  { start:  51, end:  62, text: '«6h e já treinei. Sem desculpas!» — 312 gostos' },
-  { start:  62, end:  72, text: '«Trabalho duro, recompensa certa.»' },
-  { start:  74, end:  87, text: 'Às vezes fecho o telemóvel e fico a olhar para o nada.' },
-  { start:  87, end: 100, text: 'Não porque estou a pensar. Mas porque não consigo pensar em nada.' },
-  { start: 108, end: 122, text: 'Hoje não. Amanhã começo de novo.' },
+  // 0:00 — abertura (Kalu ao espelho)
+  { start:   0, end:   6, text: '"Vinte e Perdido"' },
+
+  // 0:15 — Kalu vê mensagem no telemóvel
+  { start:  13, end:  25, text: 'Mano! Vou casar! 🎉 Quero que sejas padrinho!' },
+
+  // 0:26 — feed das redes sociais
+  { start:  26, end:  36, text: 'Nova fase. A vida tá boa! 🚗 — 487 likes' },
+  { start:  37, end:  46, text: 'Trabalho duro, recompensa certa. ✈️' },
+
+  // 0:45 — mesa de cozinha, mensagem da mãe
+  { start:  48, end:  59, text: 'Aquece isso. Hoje ligas àquela empresa? 🤍 — Mãe' },
+
+  // 1:00 — sofá, computador fechado
+  { start:  63, end:  74, text: 'Quarenta e três candidaturas. A frase que já decorei de tanto ler.' },
+
+  // 1:15 — email de rejeição no telemóvel
+  { start:  76, end:  83, text: 'A sua candidatura — Resultado' },
+  { start:  84, end:  96, text: 'O coração acelera sempre. Mesmo quando já sabes o que vem a seguir.' },
+  { start:  97, end: 104, text: '...avançámos com outro candidato.' },
+
+  // 1:30 — café com o amigo (diálogo)
+  { start: 105, end: 114, text: 'Miguel: "Mano, já tens namorada? E o emprego, como está?"' },
+  { start: 115, end: 124, text: 'Kalu: "Ando em processos. As coisas estão a andar."' },
+  { start: 125, end: 132, text: 'Os dois sabemos que isso não significa nada.' },
+
+  // 1:44 — caminhada na rua (A Caminhada)
+  { start: 134, end: 146, text: 'Toda a gente parece estar dentro de uma vida que funciona.' },
+  { start: 147, end: 158, text: 'E eu pareço estar do lado de fora da vitrine, a ver.' },
+
+  // 2:00 — telemóvel com "Eu não."
+  { start: 159, end: 170, text: 'Janeiro. Fevereiro. Março. Os meses mudam. Eu não.' },
+
+  // 2:09 — quarto escuro, cobrança da família (A Cobrança)
+  { start: 171, end: 182, text: 'Cheguei a casa. Não acendi a luz. Fiquei assim um bocado.' },
+
+  // 2:30 — rua, a escrever no telemóvel
+  { start: 183, end: 193, text: 'Não liguei a ninguém. Não havia nada a dizer.' },
+
+  // 2:45 — ginásio
+  { start: 194, end: 202, text: 'Saí antes do fim. Ninguém reparou.' },
+
+  // 3:23 — ecrã escuro com telemóvel (O Fim)
+  { start: 203, end: 212, text: 'Ainda não tenho emprego. Ainda sou solteiro. Ainda não sei onde estarei daqui a um ano.' },
+
+  // 3:35 — resolução
+  { start: 213, end: 227, text: 'Mas amanhã vou acordar. Vou desligar o alarme. E vai ser outro dia igual. E está bem. Por agora, está bem.' },
+
+  // 3:30 — estatísticas (texto já no vídeo, sem legenda sobreposta)
+
+  // 3:45 — texto final
+  { start: 228, end: 242, text: 'Ele não desistiu. Só ainda não chegou. E isso também é coragem.' },
 ];
 
 // ============================================================
@@ -77,7 +139,7 @@ const v1State = {
 const v2State = {
   chapters:      [],           // cópia de CHAPTERS_V2
   activeChapter: 0,
-  videoSrc:      'media/videos/Kalu_part1.mp4',
+  videoSrc:      'media/videos/crise_dos_20.mp4',
   videoBlobUrl:  null,
   audioBlobUrl:  null,
   subtitles:     [],           // array global; substituído por SRT carregado
@@ -130,6 +192,7 @@ function initV1() {
   $('v1-btn-play').addEventListener('click', v1TogglePlay);
   $('v1-btn-upload').addEventListener('click', () => $('v1-file-input').click());
   $('v1-file-input').addEventListener('change', v1OnUpload);
+  $('v1-btn-music').addEventListener('click', v1ToggleMusic);
 
   document.addEventListener('keydown', e => {
     if (!$('screen-v1').classList.contains('active')) return;
@@ -219,6 +282,28 @@ function v1UpdatePlayBtn() {
     btn.title = 'Reproduzir';
     status.textContent = '♫ Em pausa';
     status.classList.remove('playing');
+  }
+}
+
+function v1ToggleMusic() {
+  const music  = $('v1-music');
+  const btn    = $('v1-btn-music');
+  const status = $('v1-music-status');
+  music.muted  = !music.muted;
+  if (music.muted) {
+    btn.innerHTML = '&#128263;';
+    btn.title     = 'Ativar música';
+    btn.className = 'ctrl-btn music-off';
+    status.textContent = '♫ Sem música';
+    status.classList.remove('playing');
+  } else {
+    btn.innerHTML = '&#127925;';
+    btn.title     = 'Retirar música';
+    btn.className = 'ctrl-btn music-on';
+    if (v1State.playing) {
+      status.textContent = '♫ A reproduzir';
+      status.classList.add('playing');
+    }
   }
 }
 
