@@ -23,139 +23,190 @@
       </p>
       <p class="intro-choose">Escolhe como queres experienciar a história:</p>
       <div class="version-grid">
-
-        <div class="v-card" id="card-v1">
+        <div class="v-card">
           <div class="v-roman">I</div>
           <h2 class="v-name">Narrativa Visual</h2>
-          <p class="v-sub">Imagens e vídeos<br>Sem áudio · Sem legendas</p>
+          <p class="v-sub">Slideshow de imagens<br>com música de fundo</p>
           <button class="btn-enter" data-version="1">Começar</button>
         </div>
-
         <div class="v-divider"></div>
-
-        <div class="v-card" id="card-v2">
+        <div class="v-card">
           <div class="v-roman">II</div>
-          <h2 class="v-name">Narrativa Interativa</h2>
-          <p class="v-sub">Com controlo de legendas<br>e áudio narrado</p>
+          <h2 class="v-name">Narrativa Enriquecida</h2>
+          <p class="v-sub">Vídeo por capítulos · Legendas<br>e áudio controláveis</p>
           <button class="btn-enter" data-version="2">Começar</button>
         </div>
-
       </div>
     </div>
   </div>
 
   <!-- ================================================
-       PLAYER
+       VERSÃO 1 — NARRATIVA VISUAL (SLIDESHOW)
        ================================================ -->
-  <div id="screen-player" class="screen">
+  <div id="screen-v1" class="screen">
 
-    <!-- Barra superior -->
-    <div id="topbar">
-      <button id="btn-home">&#8592; Início</button>
-      <div id="version-pill">
-        <span id="v-label">VERSÃO 1</span>
-        <span id="v-name-label">Narrativa Visual</span>
+    <div id="v1-topbar">
+      <button id="v1-btn-home">&#8592; Início</button>
+      <div class="version-pill">
+        <span class="vpill-label">VERSÃO I</span>
+        <span class="vpill-name">Narrativa Visual</span>
       </div>
-      <div id="scene-counter">Cena <span id="scene-n">1</span>&thinsp;/&thinsp;3</div>
+      <button id="v1-btn-upload" class="upload-btn">+ Adicionar Imagens</button>
     </div>
 
-    <!-- Cabeçalho da cena -->
-    <div id="scene-head">
-      <span id="scene-eyebrow">CENA 1</span>
-      <h2 id="scene-title">O Peso das Expectativas</h2>
-      <p id="scene-theme">A pressão de ter respostas antes de ter perguntas</p>
+    <div id="v1-stage">
+      <img id="v1-img" src="" alt="Slide da narrativa">
+      <div id="v1-placeholder">
+        <div class="ph-icon">&#128444;</div>
+        <div class="ph-hint">Sem imagens</div>
+      </div>
+      <button id="v1-nav-prev" class="v1-nav-btn" title="Anterior">&#10094;</button>
+      <button id="v1-nav-next" class="v1-nav-btn v1-nav-right" title="Seguinte">&#10095;</button>
+      <div id="v1-counter">1 / 16</div>
     </div>
 
-    <!-- Área de media -->
-    <div id="media-area">
+    <div id="v1-controls">
+      <div id="v1-progress-wrap">
+        <div id="v1-progress-bar"><div id="v1-progress-fill"></div></div>
+      </div>
+      <div id="v1-ctrl-row">
+        <button id="v1-btn-prev" class="ctrl-btn" title="Anterior">&#9664;</button>
+        <button id="v1-btn-play" class="ctrl-btn play-btn" title="Pausar">&#9646;&#9646;</button>
+        <button id="v1-btn-next" class="ctrl-btn" title="Seguinte">&#9654;</button>
+        <span id="v1-slide-info">Slide 1 de 16</span>
+        <span id="v1-music-status">&#127925; A reproduzir</span>
+      </div>
+    </div>
 
-      <!-- Painel de vídeo -->
-      <div id="panel-video" class="media-panel">
-        <div id="video-frame">
-          <video id="main-video" preload="metadata" playsinline></video>
-          <div id="sub-overlay"></div>
-          <div id="big-play"><span>&#9654;</span></div>
-        </div>
-        <div id="vctrls">
-          <div id="progress-wrap">
-            <div id="progress-bg"><div id="progress-fg"></div></div>
+    <div id="v1-strip-wrap">
+      <div id="v1-strip"></div>
+    </div>
+
+    <input type="file" id="v1-file-input" accept="image/*" multiple style="display:none">
+    <audio id="v1-music" loop src="media/audio/melody.mp3"></audio>
+  </div>
+
+  <!-- ================================================
+       VERSÃO 2 — NARRATIVA ENRIQUECIDA (VÍDEO)
+       ================================================ -->
+  <div id="screen-v2" class="screen">
+
+    <div id="v2-topbar">
+      <button id="v2-btn-home">&#8592; Início</button>
+      <div class="version-pill">
+        <span class="vpill-label">VERSÃO II</span>
+        <span class="vpill-name">Narrativa Enriquecida</span>
+      </div>
+      <div id="v2-chapter-title-top"></div>
+    </div>
+
+    <div id="v2-main">
+
+      <!-- #v2-player-col vai a fullscreen — tem de conter TUDO que precisa em fullscreen -->
+      <div id="v2-player-col">
+
+        <div id="v2-video-wrap">
+          <video id="v2-video" preload="metadata" playsinline></video>
+          <div id="v2-sub-overlay"></div>
+
+          <!-- Toast de capítulo (aparece quando muda) -->
+          <div id="v2-chapter-toast"></div>
+
+          <!-- Botão grande de play no centro -->
+          <div id="v2-big-play">
+            <div class="big-play-circle">&#9654;</div>
           </div>
-          <div id="vctrls-row">
+
+          <!-- Overlay de upload quando não há vídeo -->
+          <div id="v2-upload-overlay">
+            <label for="v2-video-input" class="upload-zone">
+              <span class="upload-zone-icon">&#128249;</span>
+              <span>Clica para carregar vídeo</span>
+              <span class="upload-zone-hint">MP4 · WebM · OGG</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Controlos estilo YouTube -->
+        <div id="v2-vctrls">
+          <div id="v2-progress-wrap">
+            <div id="v2-progress-bg">
+              <div id="v2-progress-buffered"></div>
+              <div id="v2-progress-fg"></div>
+              <div id="v2-chapter-marks"></div>
+              <div id="v2-progress-thumb"></div>
+            </div>
+          </div>
+          <div id="v2-ctrl-row">
             <div class="vc-left">
-              <button class="vbtn" id="btn-pp">
-                <span id="icon-play">&#9654;</span>
-                <span id="icon-pause" style="display:none">&#9646;&#9646;</span>
-              </button>
-              <button class="vbtn" id="btn-mute" title="Volume">&#128266;</button>
-              <input type="range" id="vol-range" min="0" max="1" step="0.02" value="0.3" title="Volume">
-              <span id="vol-pct">30%</span>
-              <span id="time-txt">0:00 / 0:00</span>
+              <button class="vbtn" id="v2-btn-pp"   title="Reproduzir">&#9654;</button>
+              <button class="vbtn" id="v2-btn-mute" title="Volume">&#128266;</button>
+              <div id="v2-vol-wrap">
+                <input type="range" id="v2-vol" min="0" max="1" step="0.02" value="1">
+              </div>
+              <span id="v2-time">0:00 / 0:00</span>
             </div>
             <div class="vc-right">
-              <button class="vbtn" id="btn-fs" title="Ecrã inteiro">&#x26F6;</button>
+              <!-- Este botão muda de ícone com fullscreen -->
+              <button class="vbtn" id="v2-btn-fs" title="Ecrã inteiro">&#x26F6;</button>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Painel de galeria de imagens -->
-      <div id="panel-gallery" class="media-panel" style="display:none">
-        <div id="gallery-frame">
-          <img id="gal-img" src="" alt="Imagem da narrativa">
-          <div id="gal-placeholder">
-            <div class="ph-icon">&#128444;</div>
-            <div class="ph-name" id="ph-name"></div>
-            <div class="ph-hint">Coloca a imagem em media/images/</div>
+        <!--
+          BARRA DE AÇÃO
+          Cada funcionalidade tem dois botões separados:
+            • [Adicionar X]  → abre picker de ficheiro
+            • [Ativar X]     → toggle on/off (só aparece quando há conteúdo)
+        -->
+        <div id="v2-action-bar">
+
+          <!-- Legendas -->
+          <div class="action-group">
+            <button class="ibtn-add" id="v2-btn-add-subs">
+              &#128466; Adicionar Legendas
+            </button>
+            <button class="ibtn-toggle off" id="v2-btn-toggle-subs" hidden>
+              CC
+            </button>
           </div>
-          <div id="gal-caption"></div>
-          <button id="btn-gi-prev" class="gal-arrow">&#10094;</button>
-          <button id="btn-gi-next" class="gal-arrow gal-right">&#10095;</button>
+
+          <!-- Áudio -->
+          <div class="action-group">
+            <button class="ibtn-add" id="v2-btn-add-aud">
+              &#127911; Adicionar Áudio
+            </button>
+            <button class="ibtn-toggle off" id="v2-btn-toggle-aud" hidden>
+              &#128266;
+            </button>
+          </div>
+
+          <!-- Vídeo -->
+          <button class="ibtn-add" id="v2-btn-upload-vid">
+            &#128249; Carregar Vídeo
+          </button>
+
         </div>
-        <div id="gal-bar">
-          <div id="gal-dots"></div>
-          <span id="gal-counter">1 / 10</span>
-          <div id="gal-timer-bar"><div id="gal-timer-fill"></div></div>
-        </div>
+
+        <!-- Faixa de texto de legenda -->
+        <div id="v2-sub-bar"><p id="v2-sub-text">&#8203;</p></div>
+
+      </div><!-- #v2-player-col -->
+
+      <!-- Lista de capítulos lateral (estilo YouTube) -->
+      <div id="v2-scene-list">
+        <div class="scene-list-header">Capítulos</div>
+        <div id="v2-chapters-list"></div>
       </div>
 
-    </div><!-- #media-area -->
+    </div><!-- #v2-main -->
 
-    <!-- Barra de legendas (V2) -->
-    <div id="sub-bar">
-      <p id="sub-text">&#8203;</p>
-    </div>
+    <input type="file" id="v2-video-input" accept="video/*"        style="display:none">
+    <input type="file" id="v2-srt-input"   accept=".srt,.vtt,.txt" style="display:none">
+    <input type="file" id="v2-audio-input" accept="audio/*"        style="display:none">
+    <audio id="v2-audio"></audio>
 
-    <!-- Controlos interativos (V2) -->
-    <div id="interact-bar">
-      <button id="btn-subs" class="ibtn off">
-        &#128466; Adicionar Legendas
-      </button>
-      <button id="btn-aud" class="ibtn off">
-        &#127911; Ativar Áudio
-      </button>
-    </div>
-
-    <!-- Áudio de fundo (V1) -->
-    <audio id="aud-melody" loop>
-      <source src="media/audio/melody.mp3" type="audio/mpeg">
-    </audio>
-    <!-- Narração (V2) -->
-    <audio id="aud-narr">
-      <source id="narr-src" src="" type="audio/mpeg">
-    </audio>
-
-    <!-- Navegação entre cenas -->
-    <div id="scene-nav">
-      <button id="btn-prev-scene" disabled>&#8592; Cena Anterior</button>
-      <div id="scene-dots">
-        <button class="sdot active" data-idx="0" title="Cena 1: O Dia Que Não Começa"></button>
-        <button class="sdot" data-idx="1" title="Cena 2: O Convite"></button>
-        <button class="sdot" data-idx="2" title="Cena 3: Um Dia de Cada Vez"></button>
-      </div>
-      <button id="btn-next-scene">Próxima Cena &#8594;</button>
-    </div>
-
-  </div><!-- #screen-player -->
+  </div><!-- #screen-v2 -->
 
   <script src="script.js"></script>
 </body>
